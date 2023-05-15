@@ -26,11 +26,16 @@ public enum Student {
     this.age = age;
   }
 
-  public static Student getValueOf(long id) {
-    return Arrays.stream(Student.values())
+  public static Student getValueOf(long id) throws IllegalArgumentException{
+    Student student1 = Arrays.stream(Student.values())
         .filter(student -> id == student.getId())
         .findFirst()
         .orElse(null);
+
+      if(student1 == null) {
+        throw new StudentException("Could not find student with ID " + id);
+      }
+      return student1;
   }
 
   public long getId() {
